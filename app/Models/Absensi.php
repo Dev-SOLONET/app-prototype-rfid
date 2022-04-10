@@ -19,4 +19,14 @@ class Absensi extends Model
         'jam_lembur',
         'shift_id',
     ];
+
+    public function shift()  
+    {
+        return $this->BelongsTo(Shift::class,'shift_id');
+    }
+
+    public function user()  
+    {
+        return $this->BelongsTo(Karyawan::class,'user_id');
+    }
 }
