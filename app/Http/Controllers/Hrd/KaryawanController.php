@@ -14,7 +14,9 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        //
+        return view('hrd.karyawan.index',[
+            'title' => 'Karyawan',
+        ]);
     }
 
     /**

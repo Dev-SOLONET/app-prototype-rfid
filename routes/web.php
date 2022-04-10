@@ -6,6 +6,13 @@ use App\Http\Controllers\Karyawan\AbsensiController;
 use App\Http\Controllers\Karyawan\JadwalController;
 use App\Http\Controllers\Karyawan\PenjualanController;
 
+use App\Http\Controllers\Hrd\AbsensiController as AbsensiHrdController;
+use App\Http\Controllers\Hrd\JadwalController as JadwalHrdController;
+use App\Http\Controllers\Hrd\GajiController;
+use App\Http\Controllers\Hrd\KaryawanController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +30,14 @@ Route::group(['prefix' => 'karyawan', 'as' => 'karyawan.'], function () {
     Route::resource('absensi', AbsensiController::class);
     Route::resource('jadwal', JadwalController::class);
     Route::resource('penjualan', PenjualanController::class);
+});
+
+// Route group for hrd
+Route::group(['prefix' => 'hrd', 'as' => 'hrd.'], function () {
+    Route::resource('absensi', AbsensiHrdController::class);
+    Route::resource('jadwal', JadwalHrdController::class);
+    Route::resource('gaji', GajiController::class);
+    Route::resource('karyawan', KaryawanController::class);
 });
 
 Route::get('/', function () {
