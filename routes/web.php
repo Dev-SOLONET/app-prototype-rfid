@@ -26,11 +26,11 @@ use App\Http\Controllers\Hrd\KaryawanController;
 */
 
 // Route group for karyawan
-Route::group(['prefix' => 'karyawan', 'as' => 'karyawan.'], function () {
+// Route::group(['prefix' => 'karyawan', 'as' => 'karyawan.'], function () {
     Route::resource('absensi', AbsensiController::class);
     Route::resource('jadwal', JadwalController::class);
     Route::resource('penjualan', PenjualanController::class);
-});
+// });
 
 // Route group for hrd
 Route::group(['prefix' => 'hrd', 'as' => 'hrd.'], function () {
