@@ -19,4 +19,11 @@ class Karyawan extends Model
         'alamat',
         'no_hp'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    
 }

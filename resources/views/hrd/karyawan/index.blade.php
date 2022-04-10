@@ -30,12 +30,12 @@
                                 <h4 class="header-title">Data Karyawan</h4>
                             </div>
                             <div class="col-md-6 col-12">
+                                <button type="button" onclick="add()"
+                                    class="btn btn-rounded btn-outline-info float-right mb-3 mr-1"><i
+                                        class="ti-plus"> </i> Tambah Karyawan</button>
                                 <button type="button" onclick="filter_data()"
                                     class="btn btn-rounded btn-outline-secondary float-right mb-3 mr-1"><i
                                         class="ti-filter"> </i> Filter Data</button>
-                                <button type="button" onclick="reload_table()"
-                                    class="btn btn-rounded btn-outline-secondary float-right mb-3 mr-1"><i
-                                        class="ti-reload"> </i> Reload</button>
                             </div>
                         </div>
                         <table id="dataTable" class="text-center" width="100%">
@@ -60,7 +60,8 @@
     </div>
 </div>
 <!-- main content area end -->
-@include('hrd.karyawan.modal')
+@include('hrd.karyawan.modal-filter')
+@include('hrd.karyawan.modal-karyawan')
 @endsection
 
 @section('js')
@@ -91,21 +92,15 @@
             responsive: true,
             lengthMenu: [[50, 100, 200, -1], [50, 100, 200, "All"]],
             ajax: {
-                  url: '',
+                  url: '{{ route('hrd.karyawan.index')}}',
                   type: "GET",
-                  data: function(data) {
-                    data.from = $('#from').val();
-                    data.to = $('#to').val();
-                    data.distributor = $('#distributor').val();
-                    data.penggunaan = $('#penggunaan').val();
-              }
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
-                {data: 'link_kode_po', name: 'link_kode_po'},
                 {data: 'nama', name: 'nama'},
-                {data: 'no_invoice', name: 'no_invoice'},
-                {data: 'h_total', name: 'h_total'},
+                {data: 'nik', name: 'nik'},
+                {data: 'user.jabatan.nama', name: 'user.jabatan.nama'},
+                {data: 'action', name: 'action'},
             ],
         });
 
@@ -120,8 +115,74 @@
       info();
     }
 
+    function add(){
+      $('#form')[0].reset(); // reset form on modals
+      $('#nik').html("");
+        $('#nama').html("");
+        $('#no_hp').html("");
+        $('#alamat').html("");
+        $('#username').html("");
+        $('#password').html("");
+        $('#jabatan').html("");
+        $('#jenis_kelamin').html("");
+      $('#modal-form').modal('show'); // show bootstrap modal
+      $('.modal-title').text('Tambah Data Karyawan'); // Set Title to Bootstrap modal title
+    }
+
     function filter_data(){
       $('#filter_modal').modal('show');
+    }
+
+    function save(){
+        $('#nik').html("");
+        $('#nama').html("");
+        $('#no_hp').html("");
+        $('#alamat').html("");
+        $('#username').html("");
+        $('#password').html("");
+        $('#jabatan').html("");
+        $('#jenis_kelamin').html("");
+        $.ajax({
+            url : "{{ route('hrd.karyawan.store')}}",
+            type: "POST",
+            data: $('#form').serialize(),
+            dataType: "JSON",
+            success: function(data){
+                if(data.status) {
+                    $('#modal-form').modal('hide');
+                    reload_table();
+                    sukses();
+                }else{
+                    if(data.errors.nik){
+                        $('#nik').text(data.errors.nik[0]);
+                    }
+                    if(data.errors.nama){
+                        $('#nama').text(data.errors.nama[0]);
+                    }
+                    if(data.errors.no_hp){
+                        $('#no_hp').text(data.errors.no_hp[0]);
+                    }
+                    if(data.errors.alamat){
+                        $('#alamat').text(data.errors.alamat[0]);
+                    }
+                    if(data.errors.username){
+                        $('#username').text(data.errors.username[0]);
+                    }
+                    if(data.errors.password){
+                        $('#password').text(data.errors.password[0]);
+                    }
+                    if(data.errors.jabatan){
+                        $('#jabatan').text(data.errors.jabatan[0]);
+                    }
+                    if(data.errors.jenis_kelamin){
+                        $('#jenis_kelamin').text(data.errors.jenis_kelamin[0]);
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus , errorThrown){ 
+                alert(errorThrown);
+            }
+        });
     }
 
     function info() {
@@ -139,6 +200,83 @@
 
     function reload_table(){
         table.ajax.reload(null,false);
+    }
+
+    function edit(id){
+        $('#form')[0].reset(); // reset form on modals
+        $('#nik').html("");
+        $('#nama').html("");
+        $('#no_hp').html("");
+        $('#alamat').html("");
+        $('#username').html("");
+        $('#password').html("");
+        $('#jabatan').html("");
+        $('#jenis_kelamin').html("");
+        //Ajax Load data from ajax
+        $.ajax({
+            url : "/hrd/karyawan/" + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data) {
+                $('[name="id"]').val(data.id);
+                $('[name="nama"]').val(data.nama);
+                $('[name="no_hp"]').val(data.no_hp);
+                $('[name="alamat"]').val(data.alamat);
+                $('[name="username"]').val(data.user.name);
+                $('[name="alamat"]').val(data.alamat);
+                $('[name="nik"]').val(data.nik);
+                $('[name="jenis_kelamin"]').selectpicker('val', [data.jenis_kelamin]);
+                $('[name="jabatan"]').selectpicker('val', [data.user.jabatan_id]);
+                $('#modal-form').modal('show'); // show bootstrap modal when complete loaded
+                $('.modal-title').text('Edit Data Karyawan'); // Set title to Bootstrap modal title   
+            },
+            error: function (jqXHR, textStatus , errorThrown) {
+                alert(errorThrown);
+            }
+        });
+    }
+
+   function delete_data(id){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+      })
+      swalWithBootstrapButtons.fire({
+        title: 'Konfirmasi !',
+        text: "Anda Akan Menghapus Data ?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Hapus !',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            url : "/hrd/karyawan/" + id,
+            type: "DELETE",
+            dataType: "JSON",
+            success: function(data){
+                if(data.status){
+                reload_table();
+                sukseshapus();
+                }else{
+                    alert('Data tidak boleh dihapus');
+                }
+            },
+            error: function (jqXHR, textStatus , errorThrown){ 
+                console.log(errorThrown);
+            }
+        })
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire(
+            'Batal',
+            'Data tidak dihapus',
+            'error'
+          )
+        }
+      })
     }
 
 </script>
