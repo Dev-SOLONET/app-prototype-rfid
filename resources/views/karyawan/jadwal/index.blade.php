@@ -107,7 +107,7 @@
             responsive: true,
             lengthMenu: [[50, 100, 200, -1], [50, 100, 200, "All"]],
             ajax: {
-                  url: "{{ route('jadwal.index') }}",
+                  url: "{{ route('karyawan.jadwal.index') }}",
                   type: "GET",
                   data: function(data) {
                     data.from = $('#from').val();

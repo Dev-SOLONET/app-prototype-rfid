@@ -111,7 +111,7 @@
             responsive: true,
             lengthMenu: [[50, 100, 200, -1], [50, 100, 200, "All"]],
             ajax: {
-                  url: "{{ route('absensi.index') }}",
+                  url: "{{ route('karyawan.absensi.index') }}",
                   type: "GET",
                   data: function(data) {
                     data.from = $('#from').val();
