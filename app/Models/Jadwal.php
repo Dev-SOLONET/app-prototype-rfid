@@ -17,4 +17,14 @@ class Jadwal extends Model
         'tanggal_selesai',
         'shift_id',
     ];
+
+    public function shift()  
+    {
+        return $this->BelongsTo(Shift::class,'shift_id');
+    }
+
+    public function user()  
+    {
+        return $this->BelongsTo(Karyawan::class,'user_id');
+    }
 }

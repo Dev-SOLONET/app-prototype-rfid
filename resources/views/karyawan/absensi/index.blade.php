@@ -58,11 +58,14 @@
                             <thead class="bg-light text-capitalize">
                                 <tr>
                                     <th>No</th>
+                                    <th>Nama</th>
                                     <th>Hari / Tanggal</th>
-                                    <th>Shift</th>
+                                    <th>Masuk</th>
+                                    <th>Pulang</th>
                                     <th>Jam Masuk</th>
                                     <th>Jam Pulang</th>
-                                    <th>Jam Lembur</th>
+                                    <th>Jam Kerja</th>
+                                    {{-- <th>Shift</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,22 +111,24 @@
             responsive: true,
             lengthMenu: [[50, 100, 200, -1], [50, 100, 200, "All"]],
             ajax: {
-                  url: '',
+                  url: "{{ route('absensi.index') }}",
                   type: "GET",
                   data: function(data) {
                     data.from = $('#from').val();
                     data.to = $('#to').val();
-                    data.distributor = $('#distributor').val();
                     data.penggunaan = $('#penggunaan').val();
               }
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
-                {data: 'link_kode_po', name: 'link_kode_po'},
-                {data: 'nama', name: 'nama'},
-                {data: 'no_invoice', name: 'no_invoice'},
-                {data: 'beli', name: 'beli'},
-                {data: 'h_total', name: 'h_total'},
+                {data: 'user.nama', name: 'user.nama'},
+                {data: 'tgl', name: 'tgl'},
+                {data: 'shift.jam_masuk', name: 'shift.jam_masuk'},
+                {data: 'shift.jam_pulang', name: 'shift.jam_pulang'},
+                {data: 'jam_masuk', name: 'jam_masuk'},
+                {data: 'jam_pulang', name: 'jam_pulang'},
+                {data: 'jam_pulang', name: 'jam_pulang'},
+                // {data: 'shift.nama', name: 'shift.nama'},
             ],
         });
 

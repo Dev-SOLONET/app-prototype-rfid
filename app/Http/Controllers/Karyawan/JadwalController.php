@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Jadwal;
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
 
 class JadwalController extends Controller
 {
@@ -12,8 +15,37 @@ class JadwalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        if (request()->ajax()) {
+
+            $data = Jadwal::with('shift','user')
+            ->select('id', 'user_id', 'tanggal_mulai', 'tanggal_selesai', 'shift_id')
+            ->where('tanggal_mulai', '>=', $request->get('from'))
+            ->where('tanggal_selesai', '<=', $request->get('to'))
+            ->orderByDesc('tanggal_mulai');
+
+            return Datatables::of($data->get())
+                ->addIndexColumn()
+                ->addColumn('tgl_mulai', function ($data) {
+                    return date("d F Y", strtotime($data->tanggal_mulai));
+                })
+                ->addColumn('tgl_selesai', function ($data) {
+                    return date("d F Y", strtotime($data->tanggal_selesai));
+                })
+                ->addColumn('action', function ($data) {
+                        $actionBtn = '
+                                        <center>
+                                        <a href="javascript:void(0)" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Bayar" onclick="bayar(' . $data->id . ')"><i class="ti-money"></i></a>
+                                      
+                                        </center>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['tgl_mulai','tgl_selesai','action'])
+                ->make(true);
+        }
+
         return view('karyawan.jadwal.index',[
             'title' => 'Jadwal'
         ]);
