@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="modal-form">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Modal title</h5>
@@ -8,51 +8,47 @@
             </div>
             <form id="form">
                 <div class="modal-body">
-                    <input type="hidden" name="id">
-                    <div class="col-md-6 col-12 mb-3">
-                        <label>Nama User</label>
-                        <select name="user_id" class="form-control selectpicker"
-                            data-live-search="true">
-                            <option selected disabled>--Pilih Nama User--</option>
-                            @foreach ($user as $user)
-                            <option value="{{ $user->user_id }}">{{ $user->nama }}</option>
-                            @endforeach
-                        </select>
-                        <span class="text-danger">
-                            <strong id="user_id"></strong>
-                        </span>
-                    </div>
-                    <div class="col-md-6 col-12 mb-3">
-                        <label>Shift</label>
-                        <select name="shift_id" class="form-control selectpicker"
-                            data-live-search="true">
-                            <option selected disabled>--Pilih Shift--</option>
-                            @foreach ($shift as $shift)
-                            <option value="{{ $shift->id }}">{{ $shift->nama }}</option>
-                            @endforeach
-                        </select>
-                        <span class="text-danger">
-                            <strong id="shift_id"></strong>
-                        </span>
-                    </div>
                     <div class="form-row">
+
+                        <input type="hidden" name="id">
+                        <div class="col-md-12 col-12 mb-3">
+                            <label>Nama User</label>
+                            <select name="user_id" class="form-control selectpicker" data-live-search="true">
+                                <option selected disabled>--Pilih Nama User--</option>
+                                @foreach ($user as $user)
+                                <option value="{{ $user->user_id }}">{{ $user->nama }}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger">
+                                <strong id="user_id"></strong>
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-12 mb-3">
+                            <label>Shift</label>
+                            <select name="shift_id" class="form-control selectpicker" data-live-search="true">
+                                <option selected disabled>--Pilih Shift--</option>
+                                @foreach ($shift as $shift)
+                                <option value="{{ $shift->id }}">{{ $shift->nama }}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger">
+                                <strong id="shift_id"></strong>
+                            </span>
+                        </div>
                         <div class="col-md-6 mb-3">
                             <label>Tanggal Mulai</label>
-                            <input type="date" class="form-control" name="tanggal_mulai" 
-                                required>
+                            <input type="date" class="form-control" name="tanggal_mulai" required>
                             <span class="text-danger">
                                 <strong id="tanggal_mulai"></strong>
                             </span>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>Tanggal Selesai</label>
-                            <input type="date" class="form-control" name="tanggal_selesai"
-                                required>
+                            <input type="date" class="form-control" name="tanggal_selesai" required>
                             <span class="text-danger">
                                 <strong id="tanggal_selesai"></strong>
                             </span>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -20,8 +20,7 @@
     <div class="container">
         <div class="row">
             <!-- data table start -->
-            <div class="col-md-1"></div>
-            <div class="col-md-10 col-12">
+            <div class="col-md-12 col-12">
                 <!-- /.card -->
                 <div class="card mt-3">
                     <div class="card-body">
@@ -60,10 +59,10 @@
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Hari / Tanggal</th>
-                                    <th>Masuk</th>
-                                    <th>Pulang</th>
-                                    <th>Jam Masuk</th>
-                                    <th>Jam Pulang</th>
+                                    <th>Jadwal Masuk</th>
+                                    <th>Jadwal Pulang</th>
+                                    <th>Absen Masuk</th>
+                                    <th>Absen Pulang</th>
                                     <th>Jam Kerja</th>
                                     {{-- <th>Shift</th> --}}
                                 </tr>

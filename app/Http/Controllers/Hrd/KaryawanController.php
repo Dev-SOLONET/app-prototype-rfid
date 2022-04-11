@@ -33,7 +33,7 @@ class KaryawanController extends Controller
 
                     $actionBtn = '
                             <center>
-                            <a href="/hrd/karyawan/'.$row->id.'/edit" class="btn btn-sm btn-outline-info" data-toggle="tooltip" data-placement="top" title="Slip Gaji"><i class="ti-money"></i></a>
+                            <a href="karyawan/'.$row->id.'/edit" class="btn btn-sm btn-outline-info" data-toggle="tooltip" data-placement="top" title="Slip Gaji"><i class="ti-money"></i></a>
                             <a href="javascript:void(0)" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Edit" onclick="edit(' . $row->id . ')"><i class="ti-pencil-alt"></i></a>
                             <a href="javascript:void(0)" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Hapus" onclick="delete_data(' . $row->id . ')"><i class="ti-trash"></i></a>
                             </center>';

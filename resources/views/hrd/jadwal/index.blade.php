@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
 <link rel="stylesheet" href="{{ url('srtdash/assets/vendor/sweetalert2/sweetalert2.min.css') }}">
-
 @endsection
 
 @section('content')
@@ -20,8 +19,51 @@
     <div class="container">
         <div class="row">
             <!-- data table start -->
-            <div class="col-md-1"></div>
-            <div class="col-md-10 col-12">
+            <div class="col-md-3 col-12 mt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="title">Filter Data</h5>
+                        <div class="row">
+                            <div class="col-md-12 col-12 mt-2">
+                                <label>Dari Tanggal : </label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control float-right datepicker" name="from"
+                                        placeholder="Pilih Tanggal Awal" value="{{ date('Y-m-01') }}" id="from">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <div class="col-md-12 col-12 mt-2">
+                                <label>Sampai Tanggal : </label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control float-right datepicker" name="to"
+                                        placeholder="Pilih Tanggal Akhir" value="{{ date('Y-m-t') }}" id="to">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <div class="col-md-12 col-12 mt-2">
+                                <label>Jabatan : </label>
+                                <div class="input-group">
+                                    <select id="jabatan" name="jabatan" class="form-control selectpicker"
+                                        data-live-search="true">
+                                        <option value="all" selected>--Semua Jabatan--</option>
+                                        @foreach ($jabatan as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <div class="col-md-12 col-12 text-center mt-2">
+                                <div class="form-group">
+                                    <button type="button" onclick="add_filter()" class="btn btn-outline-primary"><i
+                                            class="ti-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-12">
                 <!-- /.card -->
                 <div class="card mt-3">
                     <div class="card-body">
@@ -29,35 +71,10 @@
                             <div class="col-md-6 col-12">
                                 <h4 class="header-title">Data Jadwal Karyawan</h4>
                             </div>
-                            <div class="col-md-12 col-12">
-                                <div class="row">
-                                    <div class="col-md-3 col-12 mt-1">
-                                    </div>
-                                    <div class="col-md-3 col-12 mt-1">
-                                        <div class="input-group">
-                                            <input type="date" class="form-control float-right datepicker" name="from"
-                                                placeholder="Pilih Tanggal Awal" value="{{ date('Y-m-01') }}" id="from">
-                                        </div>
-                                        <!-- /.input group -->
-                                    </div>
-                                    <div class="col-md-3 col-12 mt-1">
-                                        <div class="input-group">
-                                            <input type="date" class="form-control float-right datepicker" name="to"
-                                                placeholder="Pilih Tanggal Akhir" value="{{ date('Y-m-t') }}" id="to">
-                                        </div>
-                                        <!-- /.input group -->
-                                    </div>
-                                    <div class="col-md-3 col-12 text-center mt-1">
-                                        <div class="form-group">
-                                            <button type="button" onclick="add_filter()" class="btn btn-outline-primary"><i
-                                                    class="ti-search"></i></button>
-                                            <button type="hidden" onclick="add()"
-                                                    class="btn btn-rounded btn-outline-info float-right mb-3"><i
-                                                    class="ti-plus"> </i>
-                                                    Tambah</button>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-6 col-12">
+                                <button type="button" onclick="add()"
+                                    class="btn btn-rounded btn-outline-info float-right mb-3"><i class="ti-plus"> </i>
+                                    Tambah</button>
                             </div>
                         </div>
                         <table id="dataTable" class="text-center" width="100%">
@@ -66,8 +83,7 @@
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Shift</th>
-                                    <th>Tanggal Mulai</th>
-                                    <th>Tanggal Selesai</th>
+                                    <th>Tanggal</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -121,15 +137,14 @@
                   data: function(data) {
                     data.from = $('#from').val();
                     data.to = $('#to').val();
-                    data.penggunaan = $('#penggunaan').val();
+                    data.jabatan = $('#jabatan').val();
               }
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
-                {data: 'user.nama', name: 'user.nama'},
-                {data: 'shift.nama', name: 'shift.nama'},
-                {data: 'tgl_mulai', name: 'tgl_mulai'},
-                {data: 'tgl_selesai', name: 'tgl_selesai'},
+                {data: 'nama_karyawan', name: 'nama_karyawan'},
+                {data: 'nama_shift', name: 'nama_shift'},
+                {data: 'tgl', name: 'tgl'},
                 {data: 'action', name: 'action'},
 
             ],
@@ -140,8 +155,7 @@
     function add_filter(){
       var from = $("#from").val();
       var to = $("#to").val();
-      var distributor = $("#distributor").val();
-      var penggunaan = $('#penggunaan').val();
+      var distributor = $("#jabatan").val();
       table.draw();
       info();
     }

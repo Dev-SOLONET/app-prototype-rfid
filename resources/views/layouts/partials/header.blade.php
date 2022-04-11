@@ -3,12 +3,11 @@
         <div class="col-lg-9 d-none d-lg-block">
             <div class="horizontal-menu ml-md-2">
                 <nav>
-                    <ul class="metismenu" id="menu">
+                    <ul id="nav_menu">
                         @if ( auth()->user()->jabatan_id == '1')
                         <li><a href="{{ route('hrd.karyawan.index')}}"><i class="ti-calendar"></i> <span>Karyawan</span></a></li>
                         <li><a href="{{ route('hrd.absensi.index')}}"><i class="ti-calendar"></i> <span>Absensi</span></a></li>
                         <li><a href="{{ route('hrd.jadwal.index')}}"><i class="ti-calendar"></i> <span>Jadwal</span></a></li>
-                        <li><a href="{{ route('hrd.gaji.index')}}"><i class="ti-calendar"></i> <span>Gaji</span></a></li>
                         @endif
                         @if ( auth()->user()->jabatan_id == '2')
                         <li><a href="{{ route('karyawan.jadwal.index') }}"><i class="ti-receipt"></i> <span>Jadwal</span></a></li>

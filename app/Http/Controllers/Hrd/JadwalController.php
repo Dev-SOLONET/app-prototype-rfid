@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Hrd;
 use App\Models\Shift;
 use App\Models\Jadwal;
 use App\Models\Karyawan;
+use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
@@ -19,19 +20,33 @@ class JadwalController extends Controller
 
         if (request()->ajax()) {
 
-            $data = Jadwal::with('shift','user')
-            ->select('id', 'user_id', 'tanggal_mulai', 'tanggal_selesai', 'shift_id')
-            ->where('tanggal_mulai', '>=', $request->get('from'))
-            ->where('tanggal_selesai', '<=', $request->get('to'))
-            ->orderByDesc('tanggal_mulai');
+            if ($request->jabatan == 'all') {
+                $data = DB::table('jadwal')
+                    ->join('shift', 'shift.id', '=', 'jadwal.shift_id')
+                    ->join('users', 'users.id', '=', 'jadwal.user_id')
+                    ->join('jabatan', 'jabatan.id', '=', 'users.jabatan_id')
+                    ->join('karyawan', 'karyawan.user_id', '=', 'users.id')
+                    ->select('jadwal.*', 'jabatan.nama', 'karyawan.nama as nama_karyawan', 'shift.nama as nama_shift')
+                    ->where('jadwal.tanggal_mulai', '>=', $request->get('from'))
+                    ->where('jadwal.tanggal_selesai', '<=', $request->get('to'))
+                    ->orderByDesc('jadwal.tanggal_mulai');
+            } else {
+                $data = DB::table('jadwal')
+                    ->join('shift', 'shift.id', '=', 'jadwal.shift_id')
+                    ->join('users', 'users.id', '=', 'jadwal.user_id')
+                    ->join('jabatan', 'jabatan.id', '=', 'users.jabatan_id')
+                    ->join('karyawan', 'karyawan.user_id', '=', 'users.id')
+                    ->select('jadwal.*', 'jabatan.nama', 'karyawan.nama as nama_karyawan', 'shift.nama as nama_shift')
+                    ->where('jabatan.id', '=', $request->jabatan)
+                    ->where('jadwal.tanggal_mulai', '>=', $request->get('from'))
+                    ->where('jadwal.tanggal_selesai', '<=', $request->get('to'))
+                    ->orderByDesc('jadwal.tanggal_mulai');
+            }
 
             return Datatables::of($data->get())
                 ->addIndexColumn()
-                ->addColumn('tgl_mulai', function ($data) {
-                    return date("d F Y", strtotime($data->tanggal_mulai));
-                })
-                ->addColumn('tgl_selesai', function ($data) {
-                    return date("d F Y", strtotime($data->tanggal_selesai));
+                ->addColumn('tgl', function ($data) {
+                    return date("d/m/Y", strtotime($data->tanggal_mulai)) . ' - ' . date("d/m/Y", strtotime($data->tanggal_selesai));
                 })
                 ->addColumn('action', function ($data) {
                     $actionBtn = '
@@ -41,17 +56,19 @@ class JadwalController extends Controller
                         </center>';
                     return $actionBtn;
                 })
-                ->rawColumns(['tgl_mulai','tgl_selesai','action'])
+                ->rawColumns(['tgl_mulai', 'tgl_selesai', 'action'])
                 ->make(true);
         }
 
         $user       = Karyawan::select('user_id', 'nama')->get();
         $shift      = Shift::select('id', 'nama')->get();
+        $jabatan    = Jabatan::select('id', 'nama')->get();
 
-        return view('hrd.jadwal.index',[
+        return view('hrd.jadwal.index', [
             'title'    => 'Jadwal Kerja',
             'user'     => $user,
-            'shift'    => $shift
+            'shift'    => $shift,
+            'jabatan'  => $jabatan
         ]);
     }
 
@@ -78,14 +95,13 @@ class JadwalController extends Controller
             'shift_id'          => 'required',
             'tanggal_mulai'     => 'required',
             'tanggal_selesai'   => 'required',
-
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()]);
         }
 
-        if($request->id){
+        if ($request->id) {
 
             Jadwal::find($request->id)->update(
                 [
@@ -95,9 +111,8 @@ class JadwalController extends Controller
                     'tanggal_selesai'   => $request->tanggal_selesai,
                 ]
             );
+        } else {
 
-        }else{
-    
             Jadwal::Create(
                 [
                     'user_id'           => $request->user_id,
@@ -106,7 +121,6 @@ class JadwalController extends Controller
                     'tanggal_selesai'   => $request->tanggal_selesai,
                 ]
             );
-
         }
 
         return response()->json(['status' => true]);
@@ -132,7 +146,6 @@ class JadwalController extends Controller
      */
     public function edit($id)
     {
-        
     }
 
     /**

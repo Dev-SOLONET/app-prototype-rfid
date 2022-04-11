@@ -214,7 +214,7 @@
         $('#jenis_kelamin').html("");
         //Ajax Load data from ajax
         $.ajax({
-            url : "/hrd/karyawan/" + id,
+            url : "karyawan/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data) {
@@ -254,7 +254,7 @@
       }).then((result) => {
         if (result.value) {
           $.ajax({
-            url : "/hrd/karyawan/" + id,
+            url : "karyawan/" + id,
             type: "DELETE",
             dataType: "JSON",
             success: function(data){

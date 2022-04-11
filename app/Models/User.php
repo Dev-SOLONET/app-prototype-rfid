@@ -36,6 +36,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Jabatan');
     }
 
+    public function karyawan()
+    {
+        return $this->hasOne('App\Models\Karyawan');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
