@@ -5,9 +5,9 @@
                 <nav>
                     <ul class="metismenu" id="menu">
                         @if ( auth()->user()->jabatan_id == '1')
-                        <li><a href="{{ route('hrd.karyawan.index')}}"><i class="ti-calendar"></i> <span>Karyawan HRD</span></a></li>
-                        <li><a href="{{ route('hrd.absensi.index')}}"><i class="ti-calendar"></i> <span>Absensi HRD</span></a></li>
-                        <li><a href="{{ route('hrd.jadwal.index')}}"><i class="ti-calendar"></i> <span>Jadwal HRD</span></a></li>
+                        <li><a href="{{ route('hrd.karyawan.index')}}"><i class="ti-calendar"></i> <span>Karyawan</span></a></li>
+                        <li><a href="{{ route('hrd.absensi.index')}}"><i class="ti-calendar"></i> <span>Absensi</span></a></li>
+                        <li><a href="{{ route('hrd.jadwal.index')}}"><i class="ti-calendar"></i> <span>Jadwal</span></a></li>
                         <li><a href="{{ route('hrd.gaji.index')}}"><i class="ti-calendar"></i> <span>Gaji</span></a></li>
                         @endif
                         @if ( auth()->user()->jabatan_id == '2')
