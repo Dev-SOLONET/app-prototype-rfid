@@ -2,20 +2,46 @@
 
 namespace App\Http\Controllers\Hrd;
 
-use App\Http\Controllers\Controller;
+use App\Models\Absensi;
 use Illuminate\Http\Request;
-
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 class AbsensiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        if (request()->ajax()) {
+
+            $data = Absensi::with('shift','user')
+            ->select('id', 'user_id', 'tanggal', 'jam_masuk', 'jam_pulang', 'jam_lembur', 'shift_id')
+            ->where('tanggal', '>=', $request->get('from'))
+            ->where('tanggal', '<=', $request->get('to'))
+            ->orderByDesc('tanggal');
+
+            return Datatables::of($data->get())
+                ->addIndexColumn()
+                ->addColumn('tgl', function ($data) {
+                    return date("d F Y", strtotime($data->tanggal));
+                })
+                ->addColumn('action', function ($data) {
+                        $actionBtn = '
+                                        <center>
+                                        <a href="javascript:void(0)" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Bayar" onclick="bayar(' . $data->id . ')"><i class="ti-money"></i></a>
+                                      
+                                        </center>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['tgl', 'action'])
+                ->make(true);
+        }
+
+        return view('hrd.absensi.index',[
+            'title' => 'Absensi'
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

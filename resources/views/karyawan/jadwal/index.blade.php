@@ -40,9 +40,21 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+   document.addEventListener('DOMContentLoaded', function() {
+        
         var calendarEl = document.getElementById('calendar');
+        
+        window.onload = function () {
+            $('.calendar').addClass('row col-lg-12');
+            };
+
+            $(document).on('click', '.fc-button', function(e) {
+                $('.calendar').addClass('row col-lg-12');
+            });
+
         var calendar = new FullCalendar.Calendar(calendarEl, {
           themeSystem: 'bootstrap',
           headerToolbar: {
@@ -50,13 +62,14 @@
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
             },
-          events: '',
+          events: '/karyawan/jadwal/1',
           timeZone: 'UTC+7',
           locale: 'id',
           lang: 'id',
+          
+          
         });
         calendar.render();
+       
       });
-
 </script>
-@endsection

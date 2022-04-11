@@ -9,7 +9,9 @@
 <link rel="stylesheet" type="text/css"
     href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
 <link rel="stylesheet" href="{{ url('srtdash/assets/vendor/sweetalert2/sweetalert2.min.css') }}">
+
 @endsection
 
 @section('content')
@@ -25,7 +27,7 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6 col-12">
-                                <h4 class="header-title">Data Absensi</h4>
+                                <h4 class="header-title">Data Absensi Karyawan</h4>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="row">
@@ -56,11 +58,14 @@
                             <thead class="bg-light text-capitalize">
                                 <tr>
                                     <th>No</th>
+                                    <th>Nama</th>
                                     <th>Hari / Tanggal</th>
-                                    <th>Shift</th>
+                                    <th>Masuk</th>
+                                    <th>Pulang</th>
                                     <th>Jam Masuk</th>
                                     <th>Jam Pulang</th>
-                                    <th>Jam Lembur</th>
+                                    <th>Jam Kerja</th>
+                                    {{-- <th>Shift</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,22 +111,24 @@
             responsive: true,
             lengthMenu: [[50, 100, 200, -1], [50, 100, 200, "All"]],
             ajax: {
-                  url: '',
+                  url: "{{ route('hrd.absensi.index') }}",
                   type: "GET",
                   data: function(data) {
                     data.from = $('#from').val();
                     data.to = $('#to').val();
-                    data.distributor = $('#distributor').val();
                     data.penggunaan = $('#penggunaan').val();
               }
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
-                {data: 'link_kode_po', name: 'link_kode_po'},
-                {data: 'nama', name: 'nama'},
-                {data: 'no_invoice', name: 'no_invoice'},
-                {data: 'beli', name: 'beli'},
-                {data: 'h_total', name: 'h_total'},
+                {data: 'user.nama', name: 'user.nama'},
+                {data: 'tgl', name: 'tgl'},
+                {data: 'shift.jam_masuk', name: 'shift.jam_masuk'},
+                {data: 'shift.jam_pulang', name: 'shift.jam_pulang'},
+                {data: 'jam_masuk', name: 'jam_masuk'},
+                {data: 'jam_pulang', name: 'jam_pulang'},
+                {data: 'jam_pulang', name: 'jam_pulang'},
+                // {data: 'shift.nama', name: 'shift.nama'},
             ],
         });
 

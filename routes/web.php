@@ -24,25 +24,51 @@ use App\Http\Controllers\Hrd\KaryawanController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group([
+    'middleware' => 'auth:sanctum'
+], function () {
+    
+    Route::get('/', function () {
+        if(auth()->user()->jabatan_id == '1'){
+            return redirect()->route('hrd.absensi.index');
+        }else{
+            return redirect()->route('karyawan.absensi.index');
+        }
+    }); 
 
-// Route group for karyawan
-Route::group(['prefix' => 'karyawan', 'as' => 'karyawan.'], function () {
-    Route::resource('absensi', AbsensiController::class);
-    Route::resource('jadwal', JadwalController::class);
-    Route::resource('penjualan', PenjualanController::class);
-});
 
-// Route group for hrd
-Route::group(['prefix' => 'hrd', 'as' => 'hrd.'], function () {
-    Route::resource('absensi', AbsensiHrdController::class);
-    Route::resource('jadwal', JadwalHrdController::class);
-    Route::resource('gaji', GajiController::class);
-    Route::resource('karyawan', KaryawanController::class);
-});
+    //HRD
+        Route::group([
+            'middleware' => 'role.hrd'
+        ], function () {
 
-Route::get('/', function () {
-    return view('welcome');
-});
+        // Route group for hrd
+                Route::group(['prefix' => 'hrd', 'as' => 'hrd.'], function () {
+                Route::resource('absensi', AbsensiHrdController::class);
+                Route::resource('jadwal', JadwalHrdController::class);
+                Route::resource('gaji', GajiController::class);
+                Route::resource('karyawan', KaryawanController::class);
+            });
+
+        });
+
+        //Karyawan
+        Route::group([
+            'middleware' => 'role.karyawan'
+        ], function () {
+
+        // Route group for karyawan
+                Route::group(['prefix' => 'karyawan', 'as' => 'karyawan.'], function () {
+                Route::resource('absensi', AbsensiController::class);
+                Route::resource('jadwal', JadwalController::class);
+                Route::resource('penjualan', PenjualanController::class);
+            });
+
+        });
+
+
+});    
+
 
 Route::middleware([
     'auth:sanctum',
@@ -53,3 +79,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
