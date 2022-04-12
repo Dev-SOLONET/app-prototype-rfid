@@ -2,14 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Karyawan\AbsensiController;
-use App\Http\Controllers\Karyawan\JadwalController;
-use App\Http\Controllers\Karyawan\PenjualanController;
-
-use App\Http\Controllers\Hrd\AbsensiController as AbsensiHrdController;
-use App\Http\Controllers\Hrd\JadwalController as JadwalHrdController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Hrd\GajiController;
 use App\Http\Controllers\Hrd\KaryawanController;
+
+use App\Http\Controllers\Karyawan\JadwalController;
+use App\Http\Controllers\Karyawan\AbsensiController;
+use App\Http\Controllers\Karyawan\PenjualanController;
+use App\Http\Controllers\Hrd\JadwalController as JadwalHrdController;
+use App\Http\Controllers\Hrd\AbsensiController as AbsensiHrdController;
 
 
 
@@ -24,6 +25,10 @@ use App\Http\Controllers\Hrd\KaryawanController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+
 Route::group([
     'middleware' => 'auth:sanctum'
 ], function () {
