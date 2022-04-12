@@ -25,14 +25,14 @@ class JadwalController extends Controller
     public function show($id)
     {
         $cek = Jadwal::with('shift','user')
-        ->select('tanggal_mulai','shift_id','user_id')
+        ->select('tanggal_mulai','tanggal_selesai','shift_id','user_id')
         ->get();
 
         foreach($cek as $data){
             $array = [
                 'title'  => $data->shift->nama,
                 'start'  => $data->tanggal_mulai .' '. $data->shift->jam_masuk,
-                'end'    => $data->tanggal_mulai .' '. $data->shift->jam_pulang,
+                'end'    => $data->tanggal_selesai .' '. $data->shift->jam_pulang,
             ];
 
             $result[] = $array;
