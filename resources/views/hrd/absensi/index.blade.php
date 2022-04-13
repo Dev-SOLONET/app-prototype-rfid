@@ -60,11 +60,10 @@
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Hari / Tanggal</th>
-                                    <th>Masuk</th>
-                                    <th>Pulang</th>
+                                    <th>Shift</th>
                                     <th>Jam Masuk</th>
                                     <th>Jam Pulang</th>
-                                    <th>Jam Kerja</th>
+                                    {{-- <th>Jam Kerja</th> --}}
                                     {{-- <th>Shift</th> --}}
                                 </tr>
                             </thead>
@@ -123,11 +122,10 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
                 {data: 'user.nama', name: 'user.nama'},
                 {data: 'tgl', name: 'tgl'},
-                {data: 'shift.jam_masuk', name: 'shift.jam_masuk'},
-                {data: 'shift.jam_pulang', name: 'shift.jam_pulang'},
+                {data: 'shift.nama', name: 'shift.nama'},
                 {data: 'jam_masuk', name: 'jam_masuk'},
                 {data: 'jam_pulang', name: 'jam_pulang'},
-                {data: 'jam_pulang', name: 'jam_pulang'},
+                // {data: 'jam_pulang', name: 'jam_pulang'},
                 // {data: 'shift.nama', name: 'shift.nama'},
             ],
         });

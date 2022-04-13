@@ -82,11 +82,14 @@ class KaryawanController extends Controller
                 'password'  => 'required',
                 'jabatan'   => 'required',
                 'jenis_kelamin'   => 'required',
+                'uid'       => 'required',
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()]);
             }
+
+             $hexadecimal = $request->uid;
 
             // add data
             DB::beginTransaction();
@@ -97,7 +100,7 @@ class KaryawanController extends Controller
                     'name'              => $request->username,
                     'password'          => Hash::make($request->password),
                     'jabatan_id'        => $request->jabatan,
-                    'uid'               => '',
+                    'uid'               => dechex($hexadecimal),
                     'email'             => $request->username . '@mail',
                 ]);
 
