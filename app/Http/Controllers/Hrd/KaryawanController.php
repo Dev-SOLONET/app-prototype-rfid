@@ -194,6 +194,8 @@ class KaryawanController extends Controller
                 return response()->json(['errors' => $validator->errors()]);
             }
 
+            $hexadecimal = $request->uid;
+
             DB::beginTransaction();
 
             try {
@@ -215,7 +217,7 @@ class KaryawanController extends Controller
                     User::find($karyawan->user_id)->update([
                         'name'              => $request->username,
                         'jabatan_id'        => $request->jabatan,
-                        'uid'               => '',
+                        'uid'               => dechex($hexadecimal),
                     ]);
                 } else {
                     // update data
@@ -223,7 +225,7 @@ class KaryawanController extends Controller
                         'name'              => $request->username,
                         'password'          => Hash::make($request->password),
                         'jabatan_id'        => $request->jabatan,
-                        'uid'               => '',
+                        'uid'               => dechex($hexadecimal),
                     ]);
                 }
 

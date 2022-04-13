@@ -15,7 +15,7 @@
 
 @section('content')
 <!-- page title area end -->
-<div class="main-content-inner">
+<div class="main-content-inner" style="background-color: #e8f1f7">
     <div class="container">
         <div class="row">
             <!-- data table start -->

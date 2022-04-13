@@ -22,14 +22,14 @@
                         </div>
                         <div class="col-md-4 col-12 mb-3">
                             <label>UID</label>
-                            <input type="text" class="form-control" name="uid" placeholder="Tap Menggunakan Reader RFID" autocomplete="off" required>
+                            <input type="number" class="form-control" name="uid" placeholder="Tap Menggunakan Reader RFID" autocomplete="off" required>
                             <span class="text-danger">
                                 <strong id="uid"></strong>
                             </span>
                         </div>
                         <div class="col-md-4 col-12 mb-3">
                             <label>NIK</label>
-                            <input type="text" class="form-control" name="nik" placeholder="Masukan NIK" required>
+                            <input type="number" class="form-control" name="nik" placeholder="Masukan NIK" required>
                             <span class="text-danger">
                                 <strong id="nik"></strong>
                             </span>

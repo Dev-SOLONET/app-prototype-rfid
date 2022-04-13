@@ -9,8 +9,8 @@
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="{{ url('srtdash/assets/images/author/avatar.png') }}"
-                                alt="User profile picture">
+                            <img class="profile-user-img img-fluid img-circle"
+                                src="https://ui-avatars.com/api/?name={{ $data->nama }}&color=7F9CF5&background=EBF4FF" alt="User profile picture">
                         </div>
                         <br>
                         <h3 class="profile-username text-center">{{ $data->nama }}</h3>
@@ -23,12 +23,11 @@
                                 <b>No Hp</b> <a class="float-right">{{ $data->no_hp }}</a>
                             </li>
                         </ul>
-                        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
                     </div>
                 </div>
                 <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">About Me</h3>
+                    <div class="card-header text-center">
+                        <h3 class="card-title">Biodata</h3>
                     </div>
                     <div class="card-body">
                         <strong><i class="ti-map mr-1"></i> Alamat</strong>
@@ -38,7 +37,11 @@
                         <hr>
                         <strong><i class="ti-book mr-1"></i> Jenis Kelamin</strong>
                         <p class="text-muted">
-                            {{ $data->jenis_kelamin }}
+                            @if ($data->jenis_kelamin == 'L')
+                                Laki - Laki
+                            @else
+                                Perempuan
+                            @endif
                         </p>
                         <hr>
                         <strong><i class="ti-agenda mr-1"></i> Bank</strong>

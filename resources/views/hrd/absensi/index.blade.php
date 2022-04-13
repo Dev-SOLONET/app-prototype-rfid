@@ -15,7 +15,7 @@
 
 @section('content')
 <!-- page title area end -->
-<div class="main-content-inner">
+<div class="main-content-inner" style="background-color: #e8f1f7">
     <div class="container">
         <div class="row">
             <!-- data table start -->
@@ -31,7 +31,7 @@
                             </button>
                         </div>
                         <div class="toast-body">
-                            <span id="nama-karyawan"></span><span id="messages"></span>
+                            <span id="nama-karyawan"></span>
                         </div>
                     </div>
                 </div>
@@ -56,9 +56,9 @@
                                         </div>
                                         <!-- /.input group -->
                                     </div>
-                                    <div class="col-md-2 col-12 text-center mt-1">
+                                    <div class="col-md-2 col-12 text-center mt-2">
                                         <div class="form-group">
-                                            <button type="button" onclick="add_filter()" class="btn btn-sm btn-outline-primary"><i class="ti-search"></i></button>
+                                            <button type="button" onclick="add_filter()" class="btn btn-outline-primary"><i class="ti-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -69,10 +69,12 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>Tanggal</th>
+                                    <th>Hari / Tanggal</th>
                                     <th>Shift</th>
                                     <th>Jam Masuk</th>
                                     <th>Jam Pulang</th>
+                                    {{-- <th>Jam Kerja</th> --}}
+                                    {{-- <th>Shift</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -107,8 +109,9 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous">
-</script>
+{{-- <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous">
+</script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
 
 <script type="text/javascript">
     // socket.io
@@ -172,6 +175,8 @@
                     data: 'jam_pulang',
                     name: 'jam_pulang'
                 },
+                // {data: 'jam_pulang', name: 'jam_pulang'},
+                // {data: 'shift.nama', name: 'shift.nama'},
             ],
         });
 
