@@ -77,7 +77,7 @@ class KaryawanController extends Controller
                 ->addColumn('link_kode_po', function ($data) {
                         $actionBtn = '
                                 <center>
-                                <a href="karyawan-profile?id=' . $data->id . '">' . $data->nama . '</a>
+                                <a href="karyawan-profile?id=' . $data->id . '">' . $data->nama_karyawan . '</a>
                                 </center>';
                     return $actionBtn;
                 })
