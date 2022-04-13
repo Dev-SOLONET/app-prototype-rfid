@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->date('tanggal');
-            $table->time('jam_masuk');
-            $table->time('jam_pulang');
-            $table->time('jam_lembur');
+            $table->time('jam_masuk')->nullable();
+            $table->time('jam_pulang')->nullable();
+            $table->time('jam_lembur')->nullable();
             $table->integer('shift_id');
             $table->timestamps();
         });

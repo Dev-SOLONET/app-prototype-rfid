@@ -125,6 +125,7 @@
         $('#password').html("");
         $('#jabatan').html("");
         $('#jenis_kelamin').html("");
+        $('#uid').html("");
       $('#modal-form').modal('show'); // show bootstrap modal
       $('.modal-title').text('Tambah Data Karyawan'); // Set Title to Bootstrap modal title
     }
@@ -142,6 +143,7 @@
         $('#password').html("");
         $('#jabatan').html("");
         $('#jenis_kelamin').html("");
+        $('#uid').html("");
         $.ajax({
             url : "{{ route('hrd.karyawan.store')}}",
             type: "POST",
@@ -176,6 +178,9 @@
                     }
                     if(data.errors.jenis_kelamin){
                         $('#jenis_kelamin').text(data.errors.jenis_kelamin[0]);
+                    }
+                    if(data.errors.uid){
+                        $('#uid').text(data.errors.uid[0]);
                     }
                 }
             },
@@ -212,6 +217,7 @@
         $('#password').html("");
         $('#jabatan').html("");
         $('#jenis_kelamin').html("");
+        $('#uid').html("");
         //Ajax Load data from ajax
         $.ajax({
             url : "karyawan/" + id,
@@ -227,6 +233,7 @@
                 $('[name="nik"]').val(data.nik);
                 $('[name="jenis_kelamin"]').selectpicker('val', [data.jenis_kelamin]);
                 $('[name="jabatan"]').selectpicker('val', [data.user.jabatan_id]);
+                $('[name="uid"]').selectpicker('val', [data.user.uid]);
                 $('#modal-form').modal('show'); // show bootstrap modal when complete loaded
                 $('.modal-title').text('Edit Data Karyawan'); // Set title to Bootstrap modal title   
             },

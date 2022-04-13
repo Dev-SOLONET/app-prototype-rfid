@@ -13,11 +13,18 @@
                     <input type="hidden" name="id">
                     @csrf
                     <div class="form-row">
-                        <div class="col-md-12 col-12 mb-3">
+                        <div class="col-md-6 col-12 mb-3">
                             <label>Nama</label>
                             <input type="text" class="form-control" name="nama" placeholder="Masukan Nama Karyawan" required>
                             <span class="text-danger">
                                 <strong id="nama"></strong>
+                            </span>
+                        </div>
+                        <div class="col-md-6 col-12 mb-3">
+                            <label>UID</label>
+                            <input type="text" class="form-control" name="uid" placeholder="Masukan UID" required>
+                            <span class="text-danger">
+                                <strong id="uid"></strong>
                             </span>
                         </div>
                         <div class="col-md-6 col-12 mb-3">

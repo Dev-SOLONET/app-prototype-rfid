@@ -62,7 +62,7 @@
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
             },
-          events: '/karyawan/jadwal/1',
+          events: '/absensirfid/karyawan/jadwal/1',
           timeZone: 'UTC+7',
           locale: 'id',
           lang: 'id',

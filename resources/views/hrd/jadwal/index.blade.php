@@ -233,7 +233,7 @@
             $('[name="id"]').val('');
             //Ajax Load data from ajax
             $.ajax({
-            url : "/hrd/jadwal/" + id,
+            url : "/absensirfid/hrd/jadwal/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data) {
@@ -269,7 +269,7 @@
             }).then((result) => {
                 if (result.value) {
                 $.ajax({
-                    url : "/hrd/jadwal/" + id,
+                    url : "/absensirfid/hrd/jadwal/" + id,
                     type: "DELETE",
                     dataType: "JSON",
                     success: function(data){

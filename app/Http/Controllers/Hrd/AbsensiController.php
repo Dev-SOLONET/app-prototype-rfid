@@ -14,7 +14,7 @@ class AbsensiController extends Controller
 
         if (request()->ajax()) {
 
-            $data = Absensi::with('shift','user')
+            $data = Absensi::with('shift','karyawan')
             ->select('id', 'user_id', 'tanggal', 'jam_masuk', 'jam_pulang', 'jam_lembur', 'shift_id')
             ->where('tanggal', '>=', $request->get('from'))
             ->where('tanggal', '<=', $request->get('to'))

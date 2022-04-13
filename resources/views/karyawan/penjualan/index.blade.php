@@ -19,50 +19,61 @@
 <div class="main-content-inner">
     <div class="container">
         <div class="row">
+            <div class="col-md-3 col-12 mt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="title">Filter Data</h5>
+                        <div class="row">
+                            <div class="col-md-12 col-12 mt-2">
+                                <label>Dari Tanggal : </label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control float-right datepicker" name="from"
+                                        placeholder="Pilih Tanggal Awal" value="{{ date('Y-m-01') }}" id="from">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <div class="col-md-12 col-12 mt-2">
+                                <label>Sampai Tanggal: </label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control float-right datepicker" name="to"
+                                        placeholder="Pilih Tanggal Akhir" value="{{ date('Y-m-t') }}" id="to">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <div class="col-md-12 col-12 text-center mt-2">
+                                <div class="form-group">
+                                    <button type="button" onclick="add_filter()" class="btn btn-outline-primary"><i
+                                            class="ti-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- data table start -->
-            <div class="col-md-12 col-12">
+            <div class="col-md-9 col-12">
                 <!-- /.card -->
                 <div class="card mt-3">
                     <div class="card-body">
-                        <div class="row mb-3">
+                        <div class="row">
                             <div class="col-md-6 col-12">
-                                <h4 class="header-title">Data Absensi</h4>
+                                <h4 class="header-title">Data Penjualan</h4>
                             </div>
                             <div class="col-md-6 col-12">
-                                <div class="row">
-                                    <div class="col-md-5 col-12 mt-1">
-                                        <div class="input-group">
-                                            <input type="date" class="form-control float-right datepicker" name="from"
-                                                placeholder="Pilih Tanggal Awal" value="{{ date('Y-m-01') }}" id="from">
-                                        </div>
-                                        <!-- /.input group -->
-                                    </div>
-                                    <div class="col-md-5 col-12 mt-1">
-                                        <div class="input-group">
-                                            <input type="date" class="form-control float-right datepicker" name="to"
-                                                placeholder="Pilih Tanggal Akhir" value="{{ date('Y-m-t') }}" id="to">
-                                        </div>
-                                        <!-- /.input group -->
-                                    </div>
-                                    <div class="col-md-2 col-12 text-center mt-2">
-                                        <div class="form-group">
-                                            <button type="button" onclick="add_filter()" class="btn btn-outline-primary"><i
-                                                    class="ti-search"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <button type="button" onclick="reload_table()"
+                                    class="btn btn-rounded btn-outline-secondary float-right mb-3 mr-1"><i
+                                        class="ti-reload"> </i> Reload</button>
                             </div>
                         </div>
                         <table id="dataTable" class="text-center" width="100%">
                             <thead class="bg-light text-capitalize">
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Hari / Tanggal</th>
-                                    <th>Shift</th>
-                                    <th>Absen Masuk</th>
-                                    <th>Absen Pulang</th>
-                                    {{-- <th>Shift</th> --}}
+                                    <th>Tanggal</th>
+                                    <th>Hari</th>
+                                    <th>Total</th>
+                                    <th>Pembayaran</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,7 +83,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-1"></div>
             <!-- data table end -->
         </div>
     </div>
@@ -108,22 +118,22 @@
             responsive: true,
             lengthMenu: [[50, 100, 200, -1], [50, 100, 200, "All"]],
             ajax: {
-                  url: "{{ route('karyawan.absensi.index') }}",
+                  url: '',
                   type: "GET",
                   data: function(data) {
                     data.from = $('#from').val();
                     data.to = $('#to').val();
+                    data.distributor = $('#distributor').val();
                     data.penggunaan = $('#penggunaan').val();
               }
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
-                {data: 'user.nama', name: 'user.nama'},
-                {data: 'tgl', name: 'tgl'},
-                {data: 'shift.nama', name: 'shift.nama'},
-                {data: 'jam_masuk', name: 'jam_masuk'},
-                {data: 'jam_pulang', name: 'jam_pulang'},
-                // {data: 'shift.nama', name: 'shift.nama'},
+                {data: 'link_kode_po', name: 'link_kode_po'},
+                {data: 'nama', name: 'nama'},
+                {data: 'no_invoice', name: 'no_invoice'},
+                {data: 'beli', name: 'beli'},
+                {data: 'h_total', name: 'h_total'},
             ],
         });
 
