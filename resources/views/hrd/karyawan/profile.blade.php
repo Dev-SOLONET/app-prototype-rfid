@@ -31,22 +31,22 @@
                         <h3 class="card-title">About Me</h3>
                     </div>
                     <div class="card-body">
-                        <strong><i class="fas fa-book mr-1"></i> Alamat</strong>
+                        <strong><i class="ti-map mr-1"></i> Alamat</strong>
                         <p class="text-muted">
                             {{ $data->alamat }}
                         </p>
                         <hr>
-                        <strong><i class="fas fa-book mr-1"></i> Jenis Kelamin</strong>
+                        <strong><i class="ti-book mr-1"></i> Jenis Kelamin</strong>
                         <p class="text-muted">
                             {{ $data->jenis_kelamin }}
                         </p>
                         <hr>
-                        <strong><i class="fas fa-book mr-1"></i> Bank</strong>
+                        <strong><i class="ti-agenda mr-1"></i> Bank</strong>
                         <p class="text-muted">
                             {{ $data->bank }}
                         </p>
                         <hr>
-                        <strong><i class="fas fa-book mr-1"></i> No Rekening</strong>
+                        <strong><i class="ti-clipboard mr-1"></i> No Rekening</strong>
                         <p class="text-muted">{{ $data->no_rekening }}</p>
                         <hr>
                     </div>

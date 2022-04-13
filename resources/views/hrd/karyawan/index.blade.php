@@ -157,6 +157,7 @@
         $('#jabatan').html("");
         $('#jenis_kelamin').html("");
         $('#uid').html("");
+        $('[name="id"]').val('');
         $('[name="jenis_kelamin"]').selectpicker('val', 0);
         $('[name="jabatan"]').selectpicker('val', 0);
         $('[name="bank"]').selectpicker('val', 0);
@@ -258,6 +259,7 @@
         $('#jabatan').html("");
         $('#jenis_kelamin').html("");
         $('#uid').html("");
+        $('[name="id"]').val('');
         //Ajax Load data from ajax
         $.ajax({
             url : "karyawan/" + id,
