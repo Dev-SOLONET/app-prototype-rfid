@@ -29,6 +29,13 @@ class KaryawanController extends Controller
 
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('link_kode_po', function ($data) {
+                        $actionBtn = '
+                                <center>
+                                <a href="karyawan-profile?id=' . $data->id . '">' . $data->nama . '</a>
+                                </center>';
+                    return $actionBtn;
+                })
                 ->addColumn('action', function ($row) {
 
                     $actionBtn = '
@@ -40,7 +47,7 @@ class KaryawanController extends Controller
 
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','link_kode_po'])
                 ->make(true);
         }
 
@@ -191,6 +198,7 @@ class KaryawanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($id)
     {
         $data = Karyawan::with('user.jabatan')->find($id);
@@ -249,9 +257,14 @@ class KaryawanController extends Controller
         }
     }
 
-    public function profile_users(){
+    public function profile_users(Request $request){
+        $id       = $request->get('id');
+
+        $data = Karyawan::with('user.jabatan')->where('id', $id)->first();
+
         return view('hrd.karyawan.profile', [
             'title'     => 'Profile Users',
+            'data'      => $data
         ]);
     }
 }

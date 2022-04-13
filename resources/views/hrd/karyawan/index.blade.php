@@ -106,7 +106,7 @@
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
-                {data: 'nama', name: 'nama'},
+                {data: 'link_kode_po', name: 'link_kode_po'},
                 {data: 'nik', name: 'nik'},
                 {data: 'user.jabatan.nama', name: 'user.jabatan.nama'},
                 {data: 'bank', name: 'bank'},
