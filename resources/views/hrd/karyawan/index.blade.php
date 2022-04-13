@@ -34,7 +34,7 @@
                                 <button type="button" onclick="add()"
                                     class="btn btn-rounded btn-outline-info float-right mb-3 mr-1"><i
                                         class="ti-plus"> </i> Tambah Karyawan</button>
-                                <button type="button" onclick="filter_data()"
+                                <button type="button" onclick="modal_data()"
                                     class="btn btn-rounded btn-outline-secondary float-right mb-3 mr-1"><i
                                         class="ti-filter"> </i> Filter Data</button>
                             </div>
@@ -103,12 +103,16 @@
             ajax: {
                   url: '{{ route('hrd.karyawan.index')}}',
                   type: "GET",
+                  data: function(data) {
+                    data.jabatan = $('#filter-jabatan').val();
+                    data.bank = $('#filter-bank').val();
+              }
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
                 {data: 'link_kode_po', name: 'link_kode_po'},
                 {data: 'nik', name: 'nik'},
-                {data: 'user.jabatan.nama', name: 'user.jabatan.nama'},
+                {data: 'nama_jabatan', name: 'nama_jabatan'},
                 {data: 'bank', name: 'bank'},
                 {data: 'no_rekening', name: 'no_rekening'},
                 {data: 'action', name: 'action'},
@@ -134,13 +138,12 @@
 
     });
 
-    function add_filter(){
-      var from = $("#from").val();
-      var to = $("#to").val();
-      var distributor = $("#distributor").val();
-      var penggunaan = $('#penggunaan').val();
-      table.draw();
-      info();
+    function filter_data(){
+        console.log('filter');
+        var jabatan = $("#filter-jabatan").val();
+        var bank = $("#filter-bank").val();
+        table.draw();
+        info();
     }
 
     function add(){
@@ -161,7 +164,7 @@
         $('.modal-title').text('Tambah Data Karyawan'); // Set Title to Bootstrap modal title
     }
 
-    function filter_data(){
+    function modal_data(){
       $('#filter_modal').modal('show');
     }
 
