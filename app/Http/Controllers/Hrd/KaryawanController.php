@@ -81,8 +81,10 @@ class KaryawanController extends Controller
                 'username'      => 'required|unique:App\Models\User,name',
                 'password'  => 'required',
                 'jabatan'   => 'required',
-                'jenis_kelamin'   => 'required',
-                'uid'       => 'required',
+                'jenis_kelamin'     => 'required',
+                'uid'               => 'required',
+                'bank'              => 'required',
+                'no_rekening'       => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -113,6 +115,8 @@ class KaryawanController extends Controller
                     'alamat'            => $request->alamat,
                     'no_hp'             => $request->no_hp,
                     'jenis_kelamin'     => $request->jenis_kelamin,
+                    'bank'              => $request->bank,
+                    'no_rekening'       => $request->no_rekening,
                 ]);
 
                 DB::commit();
@@ -130,6 +134,8 @@ class KaryawanController extends Controller
                 'no_hp'     => 'required',
                 'alamat'    => 'required',
                 'jabatan'   => 'required',
+                'bank'              => 'required',
+                'no_rekening'       => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -146,6 +152,8 @@ class KaryawanController extends Controller
                     'alamat'            => $request->alamat,
                     'no_hp'             => $request->no_hp,
                     'jenis_kelamin'     => $request->jenis_kelamin,
+                    'bank'              => $request->bank,
+                    'no_rekening'       => $request->no_rekening,
                 ]);
 
                 $karyawan = Karyawan::find($request->id);
@@ -239,5 +247,11 @@ class KaryawanController extends Controller
             DB::rollback();
             return response()->json(['error' => $e]);
         }
+    }
+
+    public function profile_users(){
+        return view('hrd.karyawan.profile', [
+            'title'     => 'Profile Users',
+        ]);
     }
 }

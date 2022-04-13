@@ -43,11 +43,12 @@ Route::group([
         ], function () {
 
         // Route group for hrd
-                Route::group(['prefix' => 'hrd', 'as' => 'hrd.'], function () {
+            Route::group(['prefix' => 'hrd', 'as' => 'hrd.'], function () {
                 Route::resource('absensi', AbsensiHrdController::class);
                 Route::resource('jadwal', JadwalHrdController::class);
                 Route::resource('gaji', GajiController::class);
                 Route::resource('karyawan', KaryawanController::class);
+                Route::get('karyawan-profile', [KaryawanController::class, 'profile_users'])->name('karyawan.profile');
             });
 
         });

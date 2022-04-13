@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('nama');
             $table->string('alamat');
             $table->string('no_hp');
+            $table->string('bank');
+            $table->string('no_rekening');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->timestamps();
         });

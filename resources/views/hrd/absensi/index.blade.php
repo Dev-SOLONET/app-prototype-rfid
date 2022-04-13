@@ -24,14 +24,14 @@
                 <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
                     <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
                         <div class="toast-header">
-                            <strong class="mr-auto">Info</strong>
+                            <strong class="mr-auto">Notification</strong>
                             <small>a mins ago</small>
                             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="toast-body">
-                            <span id="nama-karyawan"></span>
+                            <span id="nama-karyawan"></span><span id="messages"></span>
                         </div>
                     </div>
                 </div>
@@ -56,9 +56,9 @@
                                         </div>
                                         <!-- /.input group -->
                                     </div>
-                                    <div class="col-md-2 col-12 text-center mt-2">
+                                    <div class="col-md-2 col-12 text-center mt-1">
                                         <div class="form-group">
-                                            <button type="button" onclick="add_filter()" class="btn btn-outline-primary"><i class="ti-search"></i></button>
+                                            <button type="button" onclick="add_filter()" class="btn btn-sm btn-outline-primary"><i class="ti-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -69,12 +69,10 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>Hari / Tanggal</th>
+                                    <th>Tanggal</th>
                                     <th>Shift</th>
                                     <th>Jam Masuk</th>
                                     <th>Jam Pulang</th>
-                                    {{-- <th>Jam Kerja</th> --}}
-                                    {{-- <th>Shift</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -174,8 +172,6 @@
                     data: 'jam_pulang',
                     name: 'jam_pulang'
                 },
-                // {data: 'jam_pulang', name: 'jam_pulang'},
-                // {data: 'shift.nama', name: 'shift.nama'},
             ],
         });
 

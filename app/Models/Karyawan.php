@@ -17,7 +17,9 @@ class Karyawan extends Model
         'user_id',
         'jenis_kelamin',
         'alamat',
-        'no_hp'
+        'no_hp',
+        'bank',
+        'no_rekening',
     ];
 
     public function user()

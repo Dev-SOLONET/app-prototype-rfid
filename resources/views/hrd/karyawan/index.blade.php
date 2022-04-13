@@ -4,6 +4,8 @@
 <!-- Start datatable css -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+
 <link rel="stylesheet" type="text/css"
     href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
@@ -19,9 +21,8 @@
 <div class="main-content-inner">
     <div class="container">
         <div class="row">
-            <div class="col-md-1"></div>
             <!-- data table start -->
-            <div class="col-md-10 col-12">
+            <div class="col-md-12 col-12">
                 <!-- /.card -->
                 <div class="card mt-3">
                     <div class="card-body">
@@ -45,6 +46,8 @@
                                     <th>Karyawan</th>
                                     <th>NIK</th>
                                     <th>Jabatan</th>
+                                    <th>Bank</th>
+                                    <th>No Rekening</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -67,8 +70,14 @@
 @section('js')
 <!-- Start datatable js -->
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 
@@ -100,8 +109,27 @@
                 {data: 'nama', name: 'nama'},
                 {data: 'nik', name: 'nik'},
                 {data: 'user.jabatan.nama', name: 'user.jabatan.nama'},
+                {data: 'bank', name: 'bank'},
+                {data: 'no_rekening', name: 'no_rekening'},
                 {data: 'action', name: 'action'},
             ],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    className: 'btn btn-rounded btn-outline-success',
+                    exportOptions: {
+                        columns: [0, 1, 4, 5]
+                    }
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn btn-rounded btn-outline-danger',
+                    exportOptions: {
+                        columns: [0, 1, 4, 5]
+                    }
+                }
+            ]
         });
 
     });
@@ -116,8 +144,8 @@
     }
 
     function add(){
-      $('#form')[0].reset(); // reset form on modals
-      $('#nik').html("");
+        $('#form')[0].reset(); // reset form on modals
+        $('#nik').html("");
         $('#nama').html("");
         $('#no_hp').html("");
         $('#alamat').html("");
@@ -126,8 +154,11 @@
         $('#jabatan').html("");
         $('#jenis_kelamin').html("");
         $('#uid').html("");
-      $('#modal-form').modal('show'); // show bootstrap modal
-      $('.modal-title').text('Tambah Data Karyawan'); // Set Title to Bootstrap modal title
+        $('[name="jenis_kelamin"]').selectpicker('val', 0);
+        $('[name="jabatan"]').selectpicker('val', 0);
+        $('[name="bank"]').selectpicker('val', 0);
+        $('#modal-form').modal('show'); // show bootstrap modal
+        $('.modal-title').text('Tambah Data Karyawan'); // Set Title to Bootstrap modal title
     }
 
     function filter_data(){
@@ -182,6 +213,12 @@
                     if(data.errors.uid){
                         $('#uid').text(data.errors.uid[0]);
                     }
+                    if(data.errors.bank){
+                        $('#bank').text(data.errors.bank[0]);
+                    }
+                    if(data.errors.no_rekening){
+                        $('#no_rekening').text(data.errors.no_rekening[0]);
+                    }
                 }
             },
             error: function (jqXHR, textStatus , errorThrown){ 
@@ -231,9 +268,11 @@
                 $('[name="username"]').val(data.user.name);
                 $('[name="alamat"]').val(data.alamat);
                 $('[name="nik"]').val(data.nik);
+                $('[name="uid"]').val(data.uid);
                 $('[name="jenis_kelamin"]').selectpicker('val', [data.jenis_kelamin]);
                 $('[name="jabatan"]').selectpicker('val', [data.user.jabatan_id]);
-                $('[name="uid"]').selectpicker('val', [data.user.uid]);
+                $('[name="bank"]').selectpicker('val', [data.bank]);
+                $('[name="no_rekening"]').val(data.no_rekening);
                 $('#modal-form').modal('show'); // show bootstrap modal when complete loaded
                 $('.modal-title').text('Edit Data Karyawan'); // Set title to Bootstrap modal title   
             },
