@@ -20,12 +20,57 @@ class KaryawanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
         //datatable
         if (request()->ajax()) {
-            $data = Karyawan::with('user.jabatan')->get();
+
+            if($request->get('jabatan') == 'all'){
+
+                if($request->get('bank') == 'all'){
+
+                    $data = DB::table('karyawan')
+                            ->join('users', 'users.id', '=', 'karyawan.user_id')
+                            ->join('jabatan', 'users.jabatan_id', '=', 'jabatan.id')
+                            ->select('karyawan.id', 'karyawan.nama as nama_karyawan', 'karyawan.nik', 'karyawan.bank', 'karyawan.no_rekening', 'jabatan.nama as nama_jabatan')
+                            ->get();
+
+                }else{
+
+                    $data = DB::table('karyawan')
+                        ->join('users', 'users.id', '=', 'karyawan.user_id')
+                        ->join('jabatan', 'users.jabatan_id', '=', 'jabatan.id')
+                        ->select('karyawan.id', 'karyawan.nama as nama_karyawan', 'karyawan.nik', 'karyawan.bank', 'karyawan.no_rekening', 'jabatan.nama as nama_jabatan')
+                        ->where('karyawan.bank', '=', $request->get('bank'))
+                        ->get();
+
+                }
+                
+            }else{
+
+                if($request->get('bank') == 'all'){
+
+                    $data = DB::table('karyawan')
+                        ->join('users', 'users.id', '=', 'karyawan.user_id')
+                        ->join('jabatan', 'users.jabatan_id', '=', 'jabatan.id')
+                        ->select('karyawan.id', 'karyawan.nama as nama_karyawan', 'karyawan.nik', 'karyawan.bank', 'karyawan.no_rekening', 'jabatan.nama as nama_jabatan', 'users.jabatan_id')
+                        ->where('users.jabatan_id', '=', $request->get('jabatan'))
+                        ->get();
+
+                }else{
+
+                    $data = DB::table('karyawan')
+                        ->join('users', 'users.id', '=', 'karyawan.user_id')
+                        ->join('jabatan', 'users.jabatan_id', '=', 'jabatan.id')
+                        ->select('karyawan.id', 'karyawan.nama as nama_karyawan', 'karyawan.nik', 'karyawan.bank', 'karyawan.no_rekening', 'jabatan.nama as nama_jabatan', 'users.jabatan_id')
+                        ->where('users.jabatan_id', '=', $request->get('jabatan'))
+                        ->where('karyawan.bank', '=', $request->get('bank'))
+                        ->get();
+
+                }
+
+            }
 
             return Datatables::of($data)
                 ->addIndexColumn()
