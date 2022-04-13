@@ -124,6 +124,39 @@
     <script src="{{ url('srtdash/assets/js/scripts.js') }}"></script>
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+
+    <script src="{{ url('srtdash/assets/js/vendor/jquery-2.2.4.min.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/popper.min.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/metisMenu.min.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/jquery.slicknav.min.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/line-chart.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/pie-chart.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/maps.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/plugins.js') }}"></script>
+    <script src="{{ url('srtdash/assets/js/scripts.js') }}"></script>
+
+
+    <!-- start chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <!-- start highcharts js -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <!-- start amcharts -->
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+    <script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 </body>
 
 </html>
