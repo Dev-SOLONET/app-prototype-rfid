@@ -25,6 +25,10 @@ use App\Http\Controllers\Hrd\AbsensiController as AbsensiHrdController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+
 Route::group([
     'middleware' => 'auth:sanctum'
 ], function () {

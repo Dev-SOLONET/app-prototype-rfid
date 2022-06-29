@@ -66,6 +66,7 @@
           timeZone: 'UTC+7',
           locale: 'id',
           lang: 'id',
+          eventColor: '#378006',
           
           
         });

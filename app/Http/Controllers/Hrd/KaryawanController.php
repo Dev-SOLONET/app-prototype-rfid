@@ -133,10 +133,8 @@ class KaryawanController extends Controller
                 'username'      => 'required|unique:App\Models\User,name',
                 'password'  => 'required',
                 'jabatan'   => 'required',
-                'jenis_kelamin'     => 'required',
-                'uid'               => 'required',
-                'bank'              => 'required',
-                'no_rekening'       => 'required',
+                'jenis_kelamin'   => 'required',
+                'uid'       => 'required',
             ]);
 
             if ($validator->fails()) {

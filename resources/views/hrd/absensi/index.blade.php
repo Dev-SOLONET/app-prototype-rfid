@@ -149,32 +149,13 @@
                     data.penggunaan = $('#penggunaan').val();
                 }
             },
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'karyawan.nama',
-                    name: 'karyawan.nama'
-                },
-                {
-                    data: 'tgl',
-                    name: 'tgl'
-                },
-                {
-                    data: 'shift.nama',
-                    name: 'shift.nama'
-                },
-                {
-                    data: 'jam_masuk',
-                    name: 'jam_masuk'
-                },
-                {
-                    data: 'jam_pulang',
-                    name: 'jam_pulang'
-                },
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
+                {data: 'user.nama', name: 'user.nama'},
+                {data: 'tgl', name: 'tgl'},
+                {data: 'shift.nama', name: 'shift.nama'},
+                {data: 'jam_masuk', name: 'jam_masuk'},
+                {data: 'jam_pulang', name: 'jam_pulang'},
                 // {data: 'jam_pulang', name: 'jam_pulang'},
                 // {data: 'shift.nama', name: 'shift.nama'},
             ],

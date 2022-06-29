@@ -32,11 +32,11 @@ class JadwalController extends Controller
 
         foreach($cek as $data){
             if ($data->shift_id == 1) {
-                $eventColor = '#6495ED';
-            } else if ($data->shift_id == 2) {
                 $eventColor = '#fb8c00';
+            } else if ($data->shift_id == 2) {
+                $eventColor = '#ff0';
             } else {
-                $eventColor = '#00008B';
+                $eventColor = '#00acc1';
             }
 
             $array = [
@@ -51,6 +51,5 @@ class JadwalController extends Controller
 
         return $result;
     }
-
 
 }

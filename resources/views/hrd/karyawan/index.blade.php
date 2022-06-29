@@ -278,6 +278,7 @@
                 $('[name="jabatan"]').selectpicker('val', [data.user.jabatan_id]);
                 $('[name="bank"]').selectpicker('val', [data.bank]);
                 $('[name="no_rekening"]').val(data.no_rekening);
+                $('[name="uid"]').selectpicker('val', [data.user.uid]);
                 $('#modal-form').modal('show'); // show bootstrap modal when complete loaded
                 $('.modal-title').text('Edit Data Karyawan'); // Set title to Bootstrap modal title   
             },
