@@ -20,15 +20,67 @@ class KaryawanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
         //datatable
         if (request()->ajax()) {
-            $data = Karyawan::with('user.jabatan')->get();
+
+            if($request->get('jabatan') == 'all'){
+
+                if($request->get('bank') == 'all'){
+
+                    $data = DB::table('karyawan')
+                            ->join('users', 'users.id', '=', 'karyawan.user_id')
+                            ->join('jabatan', 'users.jabatan_id', '=', 'jabatan.id')
+                            ->select('karyawan.id', 'karyawan.nama as nama_karyawan', 'karyawan.nik', 'karyawan.bank', 'karyawan.no_rekening', 'jabatan.nama as nama_jabatan')
+                            ->get();
+
+                }else{
+
+                    $data = DB::table('karyawan')
+                        ->join('users', 'users.id', '=', 'karyawan.user_id')
+                        ->join('jabatan', 'users.jabatan_id', '=', 'jabatan.id')
+                        ->select('karyawan.id', 'karyawan.nama as nama_karyawan', 'karyawan.nik', 'karyawan.bank', 'karyawan.no_rekening', 'jabatan.nama as nama_jabatan')
+                        ->where('karyawan.bank', '=', $request->get('bank'))
+                        ->get();
+
+                }
+                
+            }else{
+
+                if($request->get('bank') == 'all'){
+
+                    $data = DB::table('karyawan')
+                        ->join('users', 'users.id', '=', 'karyawan.user_id')
+                        ->join('jabatan', 'users.jabatan_id', '=', 'jabatan.id')
+                        ->select('karyawan.id', 'karyawan.nama as nama_karyawan', 'karyawan.nik', 'karyawan.bank', 'karyawan.no_rekening', 'jabatan.nama as nama_jabatan', 'users.jabatan_id')
+                        ->where('users.jabatan_id', '=', $request->get('jabatan'))
+                        ->get();
+
+                }else{
+
+                    $data = DB::table('karyawan')
+                        ->join('users', 'users.id', '=', 'karyawan.user_id')
+                        ->join('jabatan', 'users.jabatan_id', '=', 'jabatan.id')
+                        ->select('karyawan.id', 'karyawan.nama as nama_karyawan', 'karyawan.nik', 'karyawan.bank', 'karyawan.no_rekening', 'jabatan.nama as nama_jabatan', 'users.jabatan_id')
+                        ->where('users.jabatan_id', '=', $request->get('jabatan'))
+                        ->where('karyawan.bank', '=', $request->get('bank'))
+                        ->get();
+
+                }
+
+            }
 
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('link_kode_po', function ($data) {
+                        $actionBtn = '
+                                <center>
+                                <a href="karyawan-profile?id=' . $data->id . '">' . $data->nama_karyawan . '</a>
+                                </center>';
+                    return $actionBtn;
+                })
                 ->addColumn('action', function ($row) {
 
                     $actionBtn = '
@@ -40,7 +92,7 @@ class KaryawanController extends Controller
 
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','link_kode_po'])
                 ->make(true);
         }
 
@@ -113,6 +165,8 @@ class KaryawanController extends Controller
                     'alamat'            => $request->alamat,
                     'no_hp'             => $request->no_hp,
                     'jenis_kelamin'     => $request->jenis_kelamin,
+                    'bank'              => $request->bank,
+                    'no_rekening'       => $request->no_rekening,
                 ]);
 
                 DB::commit();
@@ -130,11 +184,15 @@ class KaryawanController extends Controller
                 'no_hp'     => 'required',
                 'alamat'    => 'required',
                 'jabatan'   => 'required',
+                'bank'              => 'required',
+                'no_rekening'       => 'required',
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()]);
             }
+
+            $hexadecimal = $request->uid;
 
             DB::beginTransaction();
 
@@ -146,6 +204,8 @@ class KaryawanController extends Controller
                     'alamat'            => $request->alamat,
                     'no_hp'             => $request->no_hp,
                     'jenis_kelamin'     => $request->jenis_kelamin,
+                    'bank'              => $request->bank,
+                    'no_rekening'       => $request->no_rekening,
                 ]);
 
                 $karyawan = Karyawan::find($request->id);
@@ -155,7 +215,7 @@ class KaryawanController extends Controller
                     User::find($karyawan->user_id)->update([
                         'name'              => $request->username,
                         'jabatan_id'        => $request->jabatan,
-                        'uid'               => '',
+                        'uid'               => dechex($hexadecimal),
                     ]);
                 } else {
                     // update data
@@ -163,7 +223,7 @@ class KaryawanController extends Controller
                         'name'              => $request->username,
                         'password'          => Hash::make($request->password),
                         'jabatan_id'        => $request->jabatan,
-                        'uid'               => '',
+                        'uid'               => dechex($hexadecimal),
                     ]);
                 }
 
@@ -183,6 +243,7 @@ class KaryawanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($id)
     {
         $data = Karyawan::with('user.jabatan')->find($id);
@@ -239,5 +300,16 @@ class KaryawanController extends Controller
             DB::rollback();
             return response()->json(['error' => $e]);
         }
+    }
+
+    public function profile_users(Request $request){
+        $id       = $request->get('id');
+
+        $data = Karyawan::with('user.jabatan')->where('id', $id)->first();
+
+        return view('hrd.karyawan.profile', [
+            'title'     => 'Profile Users',
+            'data'      => $data
+        ]);
     }
 }

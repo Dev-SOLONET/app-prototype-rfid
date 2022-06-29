@@ -15,7 +15,7 @@
 
 @section('content')
 <!-- page title area end -->
-<div class="main-content-inner">
+<div class="main-content-inner" style="background-color: #e8f1f7">
     <div class="container">
         <div class="row">
             <!-- data table start -->
@@ -233,7 +233,7 @@
             $('[name="id"]').val('');
             //Ajax Load data from ajax
             $.ajax({
-            url : "/hrd/jadwal/" + id,
+            url : "/absensirfid/hrd/jadwal/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data) {
@@ -269,7 +269,7 @@
             }).then((result) => {
                 if (result.value) {
                 $.ajax({
-                    url : "/hrd/jadwal/" + id,
+                    url : "/absensirfid/hrd/jadwal/" + id,
                     type: "DELETE",
                     dataType: "JSON",
                     success: function(data){
